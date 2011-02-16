@@ -114,5 +114,5 @@ You can also query Follow model records like this:
 
 == Contributors
 
-+ {xpepermint}[http://github.com/xpepermint] (Author)
-+ {afhammad}[http://github.com/afhammad]
+* {xpepermint}[http://github.com/xpepermint] (Author)
+* {afhammad}[http://github.com/afhammad]
