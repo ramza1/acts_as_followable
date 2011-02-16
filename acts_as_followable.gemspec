@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.name = 'acts_as_followable'
   s.version = ActsAsFollowable::Version::STRING
   
-  s.date = %q{2010-11-10}
+  s.date = %q{2011-02-15}
   s.summary = "ActsAsFollowable - Model following."
   s.description = "Implements the following functionality where one model can be followed by other models and and vice versa."
   s.authors  = ['Kristijan Sedlak']
