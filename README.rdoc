@@ -111,3 +111,8 @@ You can also query Follow model records like this:
   # Follow records from followable
   Follow.for_followable(book)
   Follow.for_followable(book).order('created_at')
+
+== Contributors
+
++ {xpepermint}[http://github.com/xpepermint] (Author)
++ {afhammad}[http://github.com/afhammad]
