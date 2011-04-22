@@ -120,4 +120,4 @@ You can also query Follow model records like this:
 
 * {xpepermint}[http://github.com/xpepermint] (Author)
 * {afhammad}[http://github.com/afhammad]
-* (jeanmartin)[http://github.com/jeanmartin]
+* {jeanmartin}[http://github.com/jeanmartin]
