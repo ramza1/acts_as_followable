@@ -17,8 +17,12 @@ Run the generator which will generate a migration file.
   rails g acts_as_followable
   rake db:migrate
 
-The plugin comes with a Follow model file. You can override the default model definition by creating a new 
-app/models/follow.rb file. You can copy the content of a model from {here}[https://github.com/xpepermint/acts_as_followable/blob/master/app/models/follow.rb].
+The plugin comes with a Follow model file. You can extend the default model by creating the
+app/models/follow.rb file with content.
+
+  class Follow
+    ... your extension here ...
+  end
 
 == Setup
 
@@ -116,3 +120,4 @@ You can also query Follow model records like this:
 
 * {xpepermint}[http://github.com/xpepermint] (Author)
 * {afhammad}[http://github.com/afhammad]
+* (jeanmartin)[http://github.com/jeanmartin]
