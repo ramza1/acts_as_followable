@@ -13,6 +13,7 @@ module ActsAsFollowable
 
   class Railtie
     def self.insert
+      require File.join(File.dirname(__FILE__), '..', '..', 'app', 'models', 'follow')
       begin
         require File.join(Rails.root||RAILS_ROOT, 'app', 'models', 'follow')
       rescue LoadError
