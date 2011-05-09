@@ -1,16 +1,17 @@
 module ActsAsFollowable
   module Followable
-    
+
     def self.included(base)
       base.extend ClassMethods
     end
 
     module ClassMethods
       def acts_as_followable
+        include ActsAsFollowable::Lib::InstanceMethods
         include ActsAsFollowable::Followable::InstanceMethods
         
-        scope :following, lambda{|followable| includes(:follows).where(['follows.followable_id=? AND follows.followable_type=?', followable.id, followable.class.name]) }
-        scope :followed_by, lambda{|follower| includes(:followings).where(['follows.follower_id=? AND follows.follower_type=?', follower.id, follower.class.name]) }
+        scope :following, lambda{|followable| includes(:follows).where(['follows.followable_id=? AND follows.followable_type=?', followable.id, ActsAsFollowable::Lib.class_name(followable)]) }
+        scope :followed_by, lambda{|follower| includes(:followings).where(['follows.follower_id=? AND follows.follower_type=?', follower.id, ActsAsFollowable::Lib.class_name(follower)]) }
         
         has_many :followings, :as => :followable, :dependent => :destroy, :class_name => 'Follow'
         has_many :follows, :as => :follower, :dependent => :destroy
@@ -47,7 +48,7 @@ module ActsAsFollowable
       def follow(followable)
         follow = follow_for_follawable(followable).first
         if follow.blank?
-          Follow.create(:followable => followable, :follower => self)
+          Follow.create(:followable_id => followable.id, :followable_type => class_name(followable), :follower_id => self.id, :follower_type => class_name(self))
         end
       end
 
@@ -65,12 +66,12 @@ module ActsAsFollowable
 
       # Destroys all followers of a given type
       def destroy_followers_by_type(type)
-        Follow.where(['follows.followable_id=? AND follows.followable_type=? AND follows.follower_type=?', self.id, self.class.name, type]).destroy_all
+        Follow.where(['follows.followable_id=? AND follows.followable_type=? AND follows.follower_type=?', self.id, class_name(self), type]).destroy_all
       end
 
       # Destroys all followings of a given type
       def destroy_followings_by_type(type)
-        Follow.where(['follows.follower_id=? AND follows.follower_type=? AND follows.followable_type=?', self.id, self.class.name, type]).destroy_all
+        Follow.where(['follows.follower_id=? AND follows.follower_type=? AND follows.followable_type=?', self.id, class_name(self), type]).destroy_all
       end
 
       # Returns true if the current instance is followed by the passed record
@@ -81,11 +82,11 @@ module ActsAsFollowable
       private
       
       def follow_for_follawable(followable)
-        Follow.where(["follower_id = ? AND follower_type = ? AND followable_id = ? AND followable_type = ?", self.id, self.class.name, followable.id, followable.class.name])
+        Follow.where(["follower_id = ? AND follower_type = ? AND followable_id = ? AND followable_type = ?", self.id, class_name(self), followable.id, class_name(followable)])
       end
       
       def follow_for_follower(follower)
-        Follow.where(["follower_id = ? AND follower_type = ? AND followable_id = ? AND followable_type = ?", follower.id, follower.class.name, self.id, self.class.name])
+        Follow.where(["follower_id = ? AND follower_type = ? AND followable_id = ? AND followable_type = ?", follower.id, class_name(follower), self.id, class_name(self)])
       end
       
     end
